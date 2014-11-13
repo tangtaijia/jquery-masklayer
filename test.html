@@ -1,0 +1,66 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>shade_test</title>
+		<link href="jquery.shadeDiv.css" rel="stylesheet">
+		<script src="jquery-1.11.1.js" type="text/javascript" ></script>
+		<script src="jquery.shadeDiv.js" type="text/javascript" ></script>
+		<style type="text/css">
+			.part_div {
+				width:500px;
+				height:500px;
+				margin:0 auto;
+			}
+			.part_divs {
+				width:248px;
+				height:120px;
+				float: left;
+				margin-top: 20px;
+				border-width: 1px;
+				border-color: black;
+			}
+			.m_l {
+				margin-left: 4px;
+			}
+		</style>
+		<script type="text/javascript">
+		$(function() {
+			$(document).on("click",".full",function() {
+				shadeDiv.init({
+			    	msg : 'loading...',
+			    	secTohide : 2
+		  		});
+			});
+			$(document).on("click",".part",function() {
+				shadeDiv.init({
+			    	msg : 'loading...',
+			    	box:".part_div",
+			    	secTohide : 2
+		  		});
+			});
+			$(document).on("click",".parts",function() {
+				shadeDiv.init({
+			    	msg : 'loading...',
+			    	box:".part_divs",
+			    	secTohide : 2
+		  		});
+			});
+		});
+		</script>
+	</head>
+	<body>
+		<div style="text-align:center;">
+			<div class="part_div" >
+				<div class="part_divs"></div>
+				<div class="part_divs m_l"></div>
+				<div class="part_divs"></div>
+				<div class="part_divs m_l"></div>
+				<div class="part_divs"></div>
+				<div class="part_divs m_l"></div>
+			</div>
+			<input type="button" class="full" value="全屏遮罩">
+			<input type="button" class="part" value="局部遮罩">
+			<input type="button" class="parts" value="多局部遮罩">
+		</div>		
+	</body>
+</html>
