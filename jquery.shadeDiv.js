@@ -4,10 +4,12 @@
  * @returns {Boolean}
  */
 String.prototype.startWith = function(s) {
-    if (s == null || s == "" || this.length == 0 || s.length > this.length) return false;
-    if (this.substr(0, s.length) == s) return true;
-    else return false;
-    return true;
+    if (s == null || s == "" || this.length == 0 || s.length > this.length) 
+    	return false;
+    if (this.substr(0, s.length) == s) 
+    	return true;
+    else 
+    	return false;
 };
 
 /**
@@ -16,15 +18,17 @@ String.prototype.startWith = function(s) {
  * @returns {Boolean}
  */
 String.prototype.endWith = function(s) {
-    if (s == null || s == "" || this.length == 0 || s.length > this.length) return false;
-    if (this.substring(this.length - s.length) == s) return true;
-    else return false;
-    return true;
+    if (s == null || s == "" || this.length == 0 || s.length > this.length) 
+    	return false;
+    if (this.substring(this.length - s.length) == s) 
+    	return true;
+    else 
+    	return false;
 };
 
-/*遮罩层*/ 
+/*遮罩层*/
 shadeDiv = $.extend({
-	init:function (data,e){
+	init:function (data){
 		/*初始化data*/
 		var config = {
 			box : document,
@@ -35,13 +39,11 @@ shadeDiv = $.extend({
 			},
 			secTohide : "none"
 		};
-		data = $.extend(config, data);
-		
+		data = $.extend(config, data);		
 		/*背景串*/
 		var plugin_background_str = '<div id="plugin_background" class="plugin_background" style="display: none; "></div>';
 		/*文字串*/
-		var plugin_wait_str = '<div id="plugin_wait" class="plugin_wait" style="display: none; ">' + data.msg + '</div>';
-		
+		var plugin_wait_str = '<div id="plugin_wait" class="plugin_wait" style="display: none; ">' + data.msg + '</div>';		
 		/*计算长宽*/
 		if(data.size.width.toString().endWith("%")) {
 			if(parseFloat(data.size.width) > 100) {
