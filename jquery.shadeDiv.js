@@ -1,30 +1,13 @@
-/**
- * 字符串以s开始
- * @param s
- * @returns {Boolean}
- */
-String.prototype.startWith = function(s) {
-    if (s == null || s == "" || this.length == 0 || s.length > this.length) 
-    	return false;
-    if (this.substr(0, s.length) == s) 
-    	return true;
-    else 
-    	return false;
-};
-
-/**
- * 字符串以s结束
- * @param s
- * @returns {Boolean}
- */
-String.prototype.endWith = function(s) {
-    if (s == null || s == "" || this.length == 0 || s.length > this.length) 
-    	return false;
-    if (this.substring(this.length - s.length) == s) 
-    	return true;
-    else 
-    	return false;
-};
+if (typeof String.prototype.startsWith != 'function') {
+  String.prototype.startsWith = function (str){
+    return this.slice(0, str.length) == str;
+  };
+}
+if (typeof String.prototype.endsWith != 'function') {
+  String.prototype.endsWith = function (str){
+    return this.slice(-str.length) == str;
+  };
+}
 
 /*遮罩层*/
 shadeDiv = $.extend({
@@ -45,7 +28,7 @@ shadeDiv = $.extend({
 		/*文字串*/
 		var plugin_wait_str = '<div id="plugin_wait" class="plugin_wait" style="display: none; ">' + data.msg + '</div>';		
 		/*计算长宽*/
-		if(data.size.width.toString().endWith("%")) {
+		if(data.size.width.toString().endsWith("%")) {
 			if(parseFloat(data.size.width) > 100) {
 				data.size.width = $(data.box).width();
 			} else {
@@ -54,7 +37,7 @@ shadeDiv = $.extend({
 		} else {
 			data.size.width = parseFloat(data.size.width.toString());
 		}
-		if(data.size.height.toString().endWith("%")) {
+		if(data.size.height.toString().endsWith("%")) {
 			if(parseFloat(data.size.height) > 100) {
 				data.size.height = $(data.box).height();
 			} else {
