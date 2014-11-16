@@ -8,7 +8,7 @@
 		<style type="text/css">
 			.part_div {
 				width:500px;
-				height:500px;
+				height:420px;
 				margin:0 auto;
 				border-style: dashed;
 				border-width: 1px;
@@ -16,9 +16,9 @@
 			}
 			.part_divs {
 				width:246px;
-				height:139.15px;
+				height:127.15px;
 				float: left;
-				margin-top: 20px;
+				margin-top: 10px;
 				border-style: solid;
 				border-width: 1px;
 				border-color: black;
@@ -74,16 +74,9 @@
 			});
 			// multiple parts div shade
 			$(document).on("click",".parts",function() {
-		  		if(!$(".welcome").length) {
-		  			$(".container").prepend('<h1 class="welcome" color="red">欢迎来到jquery.shadeDiv.js</h1>');
-		  		}
 		  		$.masklayer.init({
 			    	msg : '加载中',
 			    	box:".part_divs"
-		  		});
-		  		// do something then hide manually
-		  		runTread(function() {
-		  			$(".welcome").remove();
 		  		});
 		  		runTread(function() {
 		  			$.masklayer.remove()
@@ -131,6 +124,7 @@
 	</head>	
 	<body>
 		<div class="container">
+			<h2 class="welcome" color="red">欢迎来到jquery.shadeDiv.js</h2>
 			<div style="text-align:center;">
 				<div class="part_div" >
 					<div class="part_divs"></div>
