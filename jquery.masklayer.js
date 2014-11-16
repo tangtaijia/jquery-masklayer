@@ -26,16 +26,16 @@
 					box : document,
 					msg : 'waiting...',
 					size : {
-						width : $(document).width() + "px",
-						height : $(document).height() + "px"
+						width : $(document).outerWidth() + "px",
+						height : $(document).outerHeight() + "px"
 					},
 					sec2hide : 0 ,
 					self : false
 				};
 				data = $.extend(config, data);
 				// guarantee data size`s width and height both to have values
-				data.size.width = data.size.width ? data.size.width : $(config.box).width();
-				data.size.height = data.size.height ? data.size.height : $(config.box).height();
+				data.size.width = data.size.width ? data.size.width : $(config.box).outerWidth();
+				data.size.height = data.size.height ? data.size.height : $(config.box).outerHeight();
 				/*背景串*/
 				var shade_content_background_str = '<div class="shade_content_background" class="shade_content_background" style="display: none; "></div>';
 				/*文字串*/
@@ -50,18 +50,18 @@
 				/*计算长宽*/
 				if(/%$/.test(data.size.width.toString())) {
 					if(parseFloat(data.size.width) > 100) {
-						data.size.width = $(data.box).width();
+						data.size.width = $(data.box).outerWidth();
 					} else {
-						data.size.width = $(data.box).width()*parseFloat(data.size.width)/100;
+						data.size.width = $(data.box).outerWidth()*parseFloat(data.size.width)/100;
 					}
 				} else {
 					data.size.width = parseFloat(data.size.width.toString());
 				}
 				if(/%$/.test(data.size.width.toString())) {
 					if(parseFloat(data.size.height) > 100) {
-						data.size.height = $(data.box).height();
+						data.size.height = $(data.box).outerHeight();
 					} else {
-						data.size.height = $(data.box).height()*parseFloat(data.size.height)/100;
+						data.size.height = $(data.box).outerHeight()*parseFloat(data.size.height)/100;
 					}
 				} else {
 					data.size.height = parseFloat(data.size.height.toString());
@@ -78,40 +78,52 @@
 					}
 					
 					/*计算遮罩层位置 document的话按照css文件*/
-					$('.shade_content_background').css('height',$(data.parent_container).height());
+					$('.shade_content_background').css('height',$(data.parent_container).outerHeight());
 				} else {
 					if($(data.box).length>0) {
-						var shadeDivEl;
+						var shade_div_el;
 						var shade_content_fonts_el;
 						var shade_img_el;
 						$(data.box).each(function(index,domEl) {
-							if(data.size.height >= $(domEl).height()) 
-								data.size.height = $(domEl).height();
-							if(data.size.width >= $(domEl).width()) 
-								data.size.width = $(domEl).width();
-							data.parent_container = $("<div class='shadeDiv' style='width:"+data.size.width+"px;height:"+data.size.height+"px;position:absolute;display: none;'></div>").appendTo($(domEl));
+							if(data.size.height >= $(domEl).outerHeight()) 
+								data.size.height = $(domEl).outerHeight();
+							if(data.size.width >= $(domEl).outerWidth()) 
+								data.size.width = $(domEl).outerWidth();
+							if($(domEl).is("input,textarea,a")) {
+								$(domEl).after($("<div class='shadeDiv' style='width:"+data.size.width+"px;height:"+data.size.height+"px;position:absolute;display: none;'></div>"));
+								shade_div_el = $(domEl).next(".shadeDiv");//遮罩层
+							} else {
+								$("<div class='shadeDiv' style='width:"+data.size.width+"px;height:"+data.size.height+"px;position:absolute;display: none;'></div>").appendTo($(domEl));
+								shade_div_el = $(domEl).find(".shadeDiv");//遮罩层
+							}
 							/*计算遮罩层位置 document的话按照css文件*/
-							shadeDivEl = $(domEl).find(".shadeDiv");//遮罩层
-							shadeDivEl.append(shade_content_background_str);
-							shadeDivEl.find('.shade_content_background').css('height',shadeDivEl.height());
-							shadeDivEl.css({
+							shade_div_el.append(shade_content_background_str);
+							shade_div_el.find('.shade_content_background').css('height',shade_div_el.outerHeight());
+							shade_div_el.css({
 								"left":parseFloat($(domEl).position().left)+parseFloat($(domEl).css("margin-left")),
 								"top":parseFloat($(domEl).position().top)+parseFloat($(domEl).css("margin-top"))
 							});
-							if(data.self) {								
-								shadeDivEl.append(shade_img);
-								shade_img_el = shadeDivEl.find("img");
-								shade_img_el.position({
-								    my:        "center top",
-								    at:        "left bottom",
-								    of:        shadeDivEl, 
-								    collision: "fit"
-								});
+							if(data.self) {	
+								shade_div_el.append(shade_img);
+								shade_img_el = shade_div_el.find("img");
+								if($(domEl).is("input,textarea,a")) {
+									shade_img_el.css({
+										"position":'relative',
+										"margin-top":shade_div_el.outerHeight()+"px"
+									});
+								} else {									
+									shade_img_el.position({
+									    my:        "center top",
+									    at:        "left bottom",
+									    of:        shade_div_el, 
+									    collision: "fit"
+									});
+								}							
 							} else {					
-								shadeDivEl.append(shade_content_fonts_str);
-								shade_content_fonts_el = shadeDivEl.find("." + target.settings.shade_content_fonts_class);//遮罩文字
+								shade_div_el.append(shade_content_fonts_str);
+								shade_content_fonts_el = shade_div_el.find("." + target.settings.shade_content_fonts_class);//遮罩文字
 								
-								var marginTopEl = shadeDivEl.height()/2-(shade_content_fonts_el.height()+20)/2;
+								var marginTopEl = shade_div_el.outerHeight()/2-(shade_content_fonts_el.outerHeight()+20)/2;
 								shade_content_fonts_el.css({
 									"position":'relative',
 									"margin-top":marginTopEl+"px"
@@ -154,9 +166,9 @@
   		$.masklayer.init(opts);
   	};
 
-	//////////////////////////////////////////////
-	// the codes below are jquery.ui.position.js//
-	//////////////////////////////////////////////
+	///////////////////////////////////////////////
+	// the codes below are jquery.ui.position.js //
+	///////////////////////////////////////////////
   	$.ui = $.ui || {};
 
 	var horizontalPositions = /left|center|right/,

@@ -3,7 +3,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>shade_test</title>
 		<link href="jquery.masklayer.css" rel="stylesheet">
-		<script src="jquery-1.11.1.js" type="text/javascript" ></script>
+		<script src="jquery.min.js" type="text/javascript" ></script>
 		<script src="jquery.masklayer.js" type="text/javascript" ></script>
 		<style type="text/css">
 			.part_div {
@@ -32,14 +32,25 @@
 			.welcome {
 				text-align:center
 			}
-			.shadeself {
-				width:60px;
+			.span_self,.div_self {
+				width:80px;
 				cursor: pointer;
 				border-style: dashed;
 				border-width: 1px;
 				border-color: blue;
+				margin: 0 auto;
 			}
-			.shadeself:hover {
+			.span_self {
+				float: left;
+				margin-left: 51%;
+				margin-top: 20px;
+			}
+			.div_self {
+				float: right;
+				margin-right: 51%;
+				margin-top: -20px;
+			}
+			.span_self:hover,.div_self:hover {
 				text-decoration: underline;				
 			}
 		</style>
@@ -91,11 +102,24 @@
 		  		});
 			});
 
-			$(document).on("click",".shadeself",function() {
-				$(this).masklayer({msg:"w...",sec2hide:2});
+			$(document).on("click",".span_self",function() {
+				masklayer_self($(this));
+			});
+			$(document).on("click",".div_self",function() {
+				masklayer_self($(this));
+			});
+			$(document).on("click","input[type=button]",function() {
+				masklayer_self($(this));
+			});
+			$(document).on("click","a.link_self",function() {
+				masklayer_self($(this));
 			});
 
 		});
+
+		function masklayer_self($this) {
+			$this.masklayer({sec2hide:2});
+		}
 
 		// function imitate thread
 		function runTread(callback){
@@ -117,11 +141,16 @@
 					<div class="part_divs m_l"></div>
 				</div>
 				<br>
-				<input type="button" class="full" value="全屏遮罩">
-				<input type="button" class="part" value="局部遮罩">
-				<input type="button" class="parts" value="多局部遮罩">
-				<input type="button" class="resize" value="resize">
-				<span class="shadeself" >shadeself</span>
+				<div>
+					<input type="button" class="full" value="全屏遮罩">
+					<input type="button" class="part" value="局部遮罩">
+					<input type="button" class="parts" value="多局部遮罩">
+					<input type="button" class="resize" value="改变尺寸">
+					<a class="link_self" href="javascript:;" >链接遮罩</a>
+					<input type="button" class="btn_self" value="按钮遮罩">
+				</div>
+				<span class="span_self" >span遮罩</span>
+				<div class="div_self" >div遮罩</div>
 			</div>		
 		</div>
 	</body>
