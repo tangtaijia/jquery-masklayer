@@ -2,65 +2,127 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>shade_test</title>
-		<link href="jquery.shadeDiv.css" rel="stylesheet">
+		<link href="jquery.masklayer.css" rel="stylesheet">
 		<script src="jquery-1.11.1.js" type="text/javascript" ></script>
-		<script src="jquery.shadeDiv.js" type="text/javascript" ></script>
+		<script src="jquery.masklayer.js" type="text/javascript" ></script>
 		<style type="text/css">
 			.part_div {
 				width:500px;
 				height:500px;
 				margin:0 auto;
+				border-style: dashed;
+				border-width: 1px;
+				border-color: red;
 			}
 			.part_divs {
-				width:248px;
-				height:120px;
+				width:246px;
+				height:139.15px;
 				float: left;
 				margin-top: 20px;
+				border-style: solid;
 				border-width: 1px;
 				border-color: black;
 			}
 			.m_l {
 				margin-left: 4px;
 			}
+			.container {
+				height: 1000px;
+			}
+			.welcome {
+				text-align:center
+			}
+			.shadeself {
+				width:60px;
+				cursor: pointer;
+				border-style: dashed;
+				border-width: 1px;
+				border-color: blue;
+			}
+			.shadeself:hover {
+				text-decoration: underline;				
+			}
 		</style>
 		<script type="text/javascript">
 		$(function() {
+			// full screen shade
 			$(document).on("click",".full",function() {
-				shadeDiv.init({
+				$.masklayer.init({
 			    	msg : 'loading...',
-			    	secTohide : 2
+			    	sec2hide : 2
 		  		});
 			});
+			
+			// simple part div shade
 			$(document).on("click",".part",function() {
-				shadeDiv.init({
-			    	msg : 'loading...',
+				$.masklayer.init({
+			    	msg : '处理中',
 			    	box:".part_div",
-			    	secTohide : 2
+			    	sec2hide : 2
 		  		});
 			});
+			// multiple parts div shade
 			$(document).on("click",".parts",function() {
-				shadeDiv.init({
+		  		if(!$(".welcome").length) {
+		  			$(".container").prepend('<h1 class="welcome" color="red">欢迎来到jquery.shadeDiv.js</h1>');
+		  		}
+		  		$.masklayer.init({
+			    	msg : '加载中',
+			    	box:".part_divs"
+		  		});
+		  		// do something then hide manually
+		  		runTread(function() {
+		  			$(".welcome").remove();
+		  		});
+		  		runTread(function() {
+		  			$.masklayer.remove()
+		  		});
+
+			});
+
+			$(document).on("click",".resize",function() {
+				$.masklayer.init({
 			    	msg : 'loading...',
 			    	box:".part_divs",
-			    	secTohide : 2
+			    	size : {
+						height : "110px"
+			    	},
+	    		 	sec2hide: 2
 		  		});
 			});
+
+			$(document).on("click",".shadeself",function() {
+				$(this).masklayer({msg:"w...",sec2hide:2});
+			});
+
 		});
+
+		// function imitate thread
+		function runTread(callback){
+		  return setTimeout(function(){
+		    callback();
+		  },1500);
+		}
 		</script>
-	</head>
+	</head>	
 	<body>
-		<div style="text-align:center;">
-			<div class="part_div" >
-				<div class="part_divs"></div>
-				<div class="part_divs m_l"></div>
-				<div class="part_divs"></div>
-				<div class="part_divs m_l"></div>
-				<div class="part_divs"></div>
-				<div class="part_divs m_l"></div>
-			</div>
-			<input type="button" class="full" value="全屏遮罩">
-			<input type="button" class="part" value="局部遮罩">
-			<input type="button" class="parts" value="多局部遮罩">
-		</div>		
+		<div class="container">
+			<div style="text-align:center;">
+				<div class="part_div" >
+					<div class="part_divs"></div>
+					<div class="part_divs m_l"></div>
+					<div class="part_divs"></div>
+					<div class="part_divs m_l"></div>
+					<div class="part_divs"></div>
+					<div class="part_divs m_l"></div>
+				</div>
+				<br>
+				<input type="button" class="full" value="全屏遮罩">
+				<input type="button" class="part" value="局部遮罩">
+				<input type="button" class="parts" value="多局部遮罩">
+				<input type="button" class="resize" value="resize">
+				<span class="shadeself" >shadeself</span>
+			</div>		
+		</div>
 	</body>
 </html>
