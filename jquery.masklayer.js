@@ -17,7 +17,7 @@
 	$.extend({
 		masklayer : {
 			settings: {
-				shade_content_fonts_class : 'shade_content_fonts',
+				shade_content_fonts_class : 'shade_content_fonts'
 			} ,
 			init:function (data){
 				var target = this;
@@ -100,8 +100,8 @@
 							shade_div_el.append(shade_content_background_str);
 							shade_div_el.find('.shade_content_background').css('height',shade_div_el.outerHeight());
 							shade_div_el.css({
-								"left":parseFloat($(domEl).position().left)+parseFloat($(domEl).css("margin-left")),
-								"top":parseFloat($(domEl).position().top)+parseFloat($(domEl).css("margin-top"))
+								"left":parseFloat($(domEl).offset().left),
+								"top":parseFloat($(domEl).offset().top)
 							});
 							if(data.self) {	
 								shade_div_el.append(shade_img);
@@ -160,7 +160,8 @@
 		}
 	});
 
-	$.fn.masklayer = function( opts={} ){
+	$.fn.masklayer = function( opts ) {
+		if(!opts) opts = {};
 		opts.box = this[0];
 		opts.self = true;
   		$.masklayer.init(opts);
