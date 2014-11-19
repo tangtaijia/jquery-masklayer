@@ -60,7 +60,7 @@
 			$(document).on("click",".full",function() {
 				$.masklayer.init({
 			    	msg : 'loading...',
-			    	sec2hide : 2
+			    	timeout : 2
 		  		});
 			});
 			
@@ -69,7 +69,7 @@
 				$.masklayer.init({
 			    	msg : '处理中',
 			    	box:".part_div",
-			    	sec2hide : 2
+			    	timeout : 2
 		  		});
 			});
 			// multiple parts div shade
@@ -92,7 +92,7 @@
 			    	size : {
 						height : "110px"
 			    	},
-	    		 	sec2hide: 2
+	    		 	timeout: 2
 		  		});
 			});
 
@@ -113,7 +113,7 @@
 
 		// masklayer common call function
 		function masklayer_self($this) {
-			$this.masklayer({sec2hide:2});
+			$this.masklayer({timeout:2});
 		}
 
 		// function imitate thread

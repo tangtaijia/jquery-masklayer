@@ -29,7 +29,7 @@
 						width : $(document).outerWidth() + "px",
 						height : $(document).outerHeight() + "px"
 					},
-					sec2hide : 0 ,
+					timeout : 0 ,
 					self : false
 				};
 				data = $.extend(config, data);
@@ -138,8 +138,8 @@
 				target.show();
 				
 				/*移除*/
-				if(data.sec2hide > 0) {
-					setTimeout(function() {target.remove();},data.sec2hide*1000);
+				if(data.timeout > 0) {
+					setTimeout(function() {target.remove();},data.timeout*1000);
 				}
 			},
 			show : function() {
